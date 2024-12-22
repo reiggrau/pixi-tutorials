@@ -1,0 +1,47 @@
+<!-- https://pixijs.com/8.x/guides/basics/getting-started#loading-pixijs -->
+<!-- 1. Serving the File -->
+<!-- npm install --global http-server -->
+<!-- http-server -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Loading PixiJS -->
+    <script src="https://pixijs.download/release/pixi.js"></script>
+  </head>
+  <body>
+    <script type="module">
+      /* 2. Creating an Application */
+      const app = new PIXI.Application();
+      await app.init({ width: 640, height: 360 });
+
+      /* 3. Adding the Canvas to the DOM */
+      document.body.appendChild(app.canvas);
+
+      /* 4. Creating a Sprite */
+      // load the PNG asynchronously
+      await PIXI.Assets.load(
+        "https://pixijs.com/assets/files/sample-747abf529b135a1f549dff3ec846afbc.png"
+      );
+      let sprite = PIXI.Sprite.from(
+        "https://pixijs.com/assets/files/sample-747abf529b135a1f549dff3ec846afbc.png"
+      );
+
+      /* 5. Adding the Sprite to the Stage */
+      app.stage.addChild(sprite);
+
+      /* 6. Writing an Update Loop */
+      // Add a variable to count up the seconds our demo has been running
+      let elapsed = 0.0;
+      // Tell our application's ticker to run a new callback every frame, passing
+      // in the amount of time that has passed since the last tick
+      app.ticker.add((ticker) => {
+        // Add the time to our total elapsed time
+        elapsed += ticker.deltaTime;
+        // Update the sprite's X position based on the cosine of our elapsed time.  We divide
+        // by 50 to slow the animation down a bit...
+        sprite.x = 100.0 + Math.cos(elapsed / 50.0) * 100.0;
+      });
+    </script>
+  </body>
+</html>
