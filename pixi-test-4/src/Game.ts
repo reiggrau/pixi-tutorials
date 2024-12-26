@@ -1,5 +1,9 @@
 import { Application, Assets, Container, Graphics, Ticker } from "pixi.js";
 
+interface GraphicsExt extends Graphics {
+  tick: number;
+}
+
 export class Game {
   private app: Application;
   private trainContainer = new Container();
@@ -599,14 +603,14 @@ export class Game {
     const particleCount = 7;
 
     // Create an array to store all the smoke groups.
-    const groups = [];
+    const groups: GraphicsExt[] = [];
 
     // Define the emitter position based on the train's position.
     const baseX = trainContainer.x + 170;
     const baseY = trainContainer.y - 120;
 
     for (let index = 0; index < groupCount; index++) {
-      const smokeGroup = new Graphics();
+      const smokeGroup = new Graphics() as GraphicsExt;
 
       for (let i = 0; i < particleCount; i++) {
         // Randomize the position and radius of each particle.
